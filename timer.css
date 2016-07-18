@@ -1,0 +1,10 @@
+#div-inplace-time {
+  margin-bottom: 10px;
+}
+[contenteditable="true"] {
+  padding: 10px;
+  outline: 2px dashed #CCC;
+}
+[contenteditable="true"]:hover {
+  outline: 2px dashed #0090D2;
+}
