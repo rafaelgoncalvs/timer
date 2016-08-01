@@ -1,10 +1,6 @@
-var currentTime = 0;
+var currentTime;
 
 var timerInterval = null;
-
-function getCleanButton() {
-  return document.getElementById("clean-button");
-}
 
 function getStartButton() {
   return document.getElementById("start-button");
@@ -18,8 +14,8 @@ function getCurrentTimeElement() {
   return document.getElementById("current-time");
 }
 
-setTime = function(time) {
-  getCurrentTimeElement().innerHTML = time;
+function setCurrentTimeElement(time) {
+  getCurrentTimeElement().innerHTML = time.toLocaleTimeString();
 }
 
 getTime = function() {
@@ -28,32 +24,28 @@ getTime = function() {
 
 changeValue = function() {
   if(currentTime > 0) {
-    setTime(--currentTime);
+  currentTime.setSeconds(currentTime.getSeconds() - 1);
+    setCurrentTimeElement(currentTime);
   } else {
     stop();
   }
 }
 
 function start() {
-  currentTime = getTime();
+  currentTime = convertFormattedTimeToObjectTime(getTime());
   timerInterval = setInterval(changeValue, 1000);
-  getCleanButton().disabled = false;
   getStartButton().disabled = true;
   getStopButton().disabled = false;
 }
 
 function stop() {
   clearInterval(timerInterval);
-  getCleanButton().disabled = false;
   getStartButton().disabled = false;
   getStopButton().disabled = false;
 }
 
-function clean() {
-  stop();
-  currentTime = 0;
-  setTime(currentTime);
-  getCleanButton().disabled = false;
-  getStartButton().disabled = false;
-  getStopButton().disabled = false;
+function convertFormattedTimeToObjectTime(formattedTime) {
+  var regex = /(\d{2}):(\d{2}):(\d{2})/;
+  var timeArray = regex.exec(formattedTime);
+  return new Date(2016, 01, 01, (+timeArray[1]), (+timeArray[2]), (+timeArray[3]));d
 }
