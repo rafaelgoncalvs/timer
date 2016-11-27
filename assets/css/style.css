@@ -1,0 +1,20 @@
+body {
+  text-align: center;
+  width: 800px;
+  margin: 0 auto;
+  background-color: rgba(6, 189, 220, 0.91);
+ }
+
+#div-inplace-time {
+  color: white;
+  font: 150px arial, sans-serif;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+[contenteditable="true"] {
+  padding: 10px;
+  outline: 2px dashed #CCC;
+}
+[contenteditable="true"]:hover {
+  outline: 2px dashed #0090D2;
+}
