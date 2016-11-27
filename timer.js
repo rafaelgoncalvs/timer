@@ -1,12 +1,65 @@
-var currentTime;
-
 var timerInterval = null;
 
-function getStartButton() {
+var currentTime;
+
+function start() {
+  currentTime = convertFormattedTimeToTime(getCurrentTime());
+  timerInterval = setInterval(changeValue, 1000);
+  getStartButtonElement().disabled = true;
+  getStopButtonElement().disabled = false;
+}
+
+function stop() {
+  clearInterval(timerInterval);
+  getStartButtonElement().disabled = false;
+  getStopButtonElement().disabled = true;
+}
+
+var changeValue = function() {
+  if(currentTime >= 0) {
+    currentTime--;
+    var formattedTime = convertTimeToFormattedTime(currentTime);
+    setCurrentTimeElement(formattedTime);
+  } else {
+    stop();
+  }
+}
+
+function convertFormattedTimeToTime(formattedTime) {
+  var regex = /(\d{2}):(\d{2}):(\d{2})/;
+  var timeArray = regex.exec(formattedTime);
+
+  var hours = parseInt(timeArray[1]);
+  var minutes = parseInt(timeArray[2]);
+  var seconds = parseInt(timeArray[3]);
+
+  var date = new Date();
+  date.setUTCHours(hours);
+  date.setUTCMinutes(minutes);
+  date.setUTCSeconds(seconds);
+  date.setUTCMilliseconds(0);
+
+  return Math.round(date.getTime() / 1000);
+}
+
+function convertTimeToFormattedTime(time) {
+  var date = new Date(time * 1000);
+  var hours = date.getUTCHours();
+  var minutes = date.getUTCMinutes();
+  var seconds = date.getUTCSeconds();
+
+  if (hours   < 10) {hours   = "0"+hours;}
+  if (minutes < 10) {minutes = "0"+minutes;}
+  if (seconds < 10) {seconds = "0"+seconds;}
+
+  return hours+':'+minutes+':'+seconds;
+}
+
+function getStartButtonElement() {
   return document.getElementById("start-button");
 }
 
-function getStopButton() {
+function getStopButtonElement() {
   return document.getElementById("stop-button");
 }
 
@@ -15,37 +68,9 @@ function getCurrentTimeElement() {
 }
 
 function setCurrentTimeElement(time) {
-  getCurrentTimeElement().innerHTML = time.toLocaleTimeString();
+  getCurrentTimeElement().innerHTML = time;
 }
 
-getTime = function() {
+function getCurrentTime() {
   return getCurrentTimeElement().innerHTML;
-}
-
-changeValue = function() {
-  if(currentTime > 0) {
-  currentTime.setSeconds(currentTime.getSeconds() - 1);
-    setCurrentTimeElement(currentTime);
-  } else {
-    stop();
-  }
-}
-
-function start() {
-  currentTime = convertFormattedTimeToObjectTime(getTime());
-  timerInterval = setInterval(changeValue, 1000);
-  getStartButton().disabled = true;
-  getStopButton().disabled = false;
-}
-
-function stop() {
-  clearInterval(timerInterval);
-  getStartButton().disabled = false;
-  getStopButton().disabled = false;
-}
-
-function convertFormattedTimeToObjectTime(formattedTime) {
-  var regex = /(\d{2}):(\d{2}):(\d{2})/;
-  var timeArray = regex.exec(formattedTime);
-  return new Date(2016, 01, 01, (+timeArray[1]), (+timeArray[2]), (+timeArray[3]));d
 }
