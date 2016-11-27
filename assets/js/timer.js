@@ -16,7 +16,8 @@ function stop() {
 }
 
 var changeValue = function() {
-  if(currentTime >= 0) {
+  console.log(currentTime);
+  if(currentTime > 1451606400) {
     currentTime--;
     var formattedTime = convertTimeToFormattedTime(currentTime);
     setCurrentTimeElement(formattedTime);
@@ -34,6 +35,9 @@ function convertFormattedTimeToTime(formattedTime) {
   var seconds = parseInt(timeArray[3]);
 
   var date = new Date();
+  date.setUTCFullYear(2016);
+  date.setUTCMonth(0);
+  date.setDate(1);
   date.setUTCHours(hours);
   date.setUTCMinutes(minutes);
   date.setUTCSeconds(seconds);

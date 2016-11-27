@@ -13,8 +13,20 @@ body {
 }
 [contenteditable="true"] {
   padding: 10px;
-  outline: 2px dashed #CCC;
 }
 [contenteditable="true"]:hover {
   outline: 2px dashed #0090D2;
+}
+
+button {
+  padding: 25px 60px;
+  margin-right: 40px;
+  font-size: 20px;
+  border-radius: 12px;
+  background-color: rgba(6, 189, 220, 0.91);
+  border: 2px solid white;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
 }
